@@ -1,0 +1,56 @@
+
+<mat-toolbar class="max-w-7xl mx-auto border-x justify-between">
+    <a routerLink="home">
+        <img src="../../../assets/imgs/logo.png" alt="Esewa logo" srcset="" class = "h-12 mr-1">
+    </a>
+    <span class="ml-[-1045px]"> Sewa Shop </span>
+
+    <button 
+        mat-icon-button
+        [matMenuTriggerFor]="menu">
+        <mat-icon class="mat-18"
+            [matBadge]='itemsQuantity'
+            
+            matBadgeColor="warn"
+        >shopping_cart</mat-icon>
+    </button>
+    
+    <mat-menu  #menu="matMenu">
+        <div *ngIf="cart.items.length; else showCartEmptyBlock;" class="p-3 divide-y divide-solid m-4">
+            <div class="flex pb-4 justify-between">
+                <span class="mr-14">{{itemsQuantity}} Items</span>
+                <a routerLink="cart">View Cart</a>
+            </div>
+
+            <!-- Different container for products added to the cart -->
+            <div  class="py-3">
+                <div 
+                    *ngFor="let item of cart.items"
+                    class="flex pb-2 justify-between font-light">
+                        <span> {{item.productName}} x {{item.quantity}} </span>
+                        <span class="font-bold"> {{ item.price | currency }} </span>
+                </div>
+            </div>
+            <div class="flex pb-2 justify-between font-bold">
+                Total: 
+                <span> {{ getTotal(cart.items) | currency}} </span>
+            </div>
+            
+            <div class="pt-3">
+                <button 
+                    (click)="onClearCart()"
+                    class=" text-white bg-red-600 rounded-full w-20 h-7 ml-1 mr-3">Empty</button>
+                <button routerLink="cart" class=" text-white bg-green-600 rounded-full w-20 h-7 mr-1">Checkout</button>
+            </div>
+        </div>
+        
+            <ng-template #showCartEmptyBlock class="">
+                <div class="m-8">
+                    <h2 class="text-center text-red-600">Cart is Empty.</h2>
+                    <button mat-raised-button color="primary" class="text-center text-red-600">Add items to checkout</button>
+                </div>
+            </ng-template>
+        
+    </mat-menu>
+
+</mat-toolbar>

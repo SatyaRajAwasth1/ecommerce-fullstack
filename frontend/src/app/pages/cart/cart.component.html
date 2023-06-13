@@ -1,0 +1,123 @@
+<mat-card class="mx-auto my-16 max-w-7xl" *ngIf="cart.items.length">
+    <table
+     mat-table 
+     [dataSource]="dataSource"
+     class="mat-elevation-z8 w-full">
+
+     <!-- containers to show product in table columns -->
+     <!-- product image -->
+     <ng-container matColumnDef="productImageLink">
+        <th mat-header-cell *matHeaderCellDef>Product</th>
+        <td mat-cell *matCellDef="let element">
+            <img src="{{element.productImageLink}}" class="w-[100px] my-4" alt="Product Image">
+        </td>
+        <td mat-footer-cell *matFooterCellDef="">
+            <button mat-raised-button color="success" routerLink="/home">
+                Continue Shopping
+            </button>
+        </td>
+     </ng-container>
+
+     <!-- Product Id -->
+     <ng-container matColumnDef="productId">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let element">
+            <span>{{element.productId}}</span>
+        </td>
+        <td mat-footer-cell *matFooterCellDef=""></td>
+     </ng-container>
+
+     <!-- product name -->
+     <ng-container matColumnDef="productName">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">
+           <span> {{element.productName}} </span>
+        </td>
+        <td mat-footer-cell *matFooterCellDef=""></td>
+     </ng-container>
+
+     <!-- Product price -->
+     <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element">
+            <span> {{element.price | currency}} </span>
+        </td>
+        <td mat-footer-cell *matFooterCellDef=""></td>
+     </ng-container>
+
+     <!-- product quantity -->
+     <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element">
+            <!-- reduce product quantity -->
+                <button mat-icon-button (click)="onDecreasingQuantity(element)">
+                    <mat-icon> remove </mat-icon>
+                </button>
+                <span class="text-[18px]"> {{ element.quantity }} </span>
+                <!-- increase product quantity -->
+            <button mat-icon-button (click)="onIncreasingQuantity(element)">
+                <mat-icon> add </mat-icon>
+            </button>
+        </td>
+        <td mat-footer-cell *matFooterCellDef=""></td>
+     </ng-container>
+
+     <!-- total amount per row -->
+     <ng-container matColumnDef="total">
+        <th mat-header-cell *matHeaderCellDef>Total</th>
+        <td mat-cell *matCellDef="let element">
+            {{element.quantity*element.price | currency}}
+        </td>
+        <!-- total amount of all products -->
+        <td mat-footer-cell *matFooterCellDef="">
+            <span class="font-bold py-5 block">
+                Grand Total: {{ getTotal(cart.items) | currency}}
+            </span>
+        </td>
+     </ng-container>
+
+     <!-- remove cart items and proceed to checkout-->
+     <!-- clear/empty whole cart -->
+     <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>
+            <button (click)="clearAll()" mat-raised-button color="warn" class="float-right"> Empty Cart </button>
+        </th>
+        <td mat-cell *matCellDef="let element" class="justify-between">
+            <!-- remove the product on that row -->
+            <button (click)="onRemoveItemFromCart(element)" mat-mini-fab color="warn" class="float-right mr-8">
+                <mat-icon class="mat-18"> remove_shopping_cart  </mat-icon>
+            </button> 
+        </td>
+        <!-- checkout and proceed to payment -->
+        <td mat-footer-cell *matFooterCellDef="">
+            <button mat-raised-button color="primary" (click)="onCheckOut()">
+                Checkout now
+            </button>
+        </td>
+     </ng-container>
+
+     <!-- Table header -->
+     <tr mat-header-row *matHeaderRowDef="columnToBeDisplayed">
+     </tr>
+     <!-- Data of the items added to the cart -->
+     <tr mat-row *matRowDef="let row; columns: columnToBeDisplayed">
+
+     </tr>
+     <!-- table footer -->
+     <tr mat-footer-row *matFooterRowDef="columnToBeDisplayed"></tr>
+
+    </table>
+
+</mat-card>
+
+<mat-card class="mx-auto my-16 max-w-7xl" *ngIf="!cart.items.length">
+    <div class="text-center my-16">
+        <h2 class="text-red-600">
+            Cart is empty. No items to checkout.
+        </h2>
+        <button mat-raised-button color="primary" routerLink="/home">
+                Shop Now
+        </button>
+    </div>
+
+</mat-card>

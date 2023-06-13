@@ -1,0 +1,39 @@
+<mat-card class="mb-4 ml-2 mt-3 mr-1">
+    <div class="flex justify-between mr-2">
+        <div>
+            <button mat-button [matMenuTriggerFor]="sortByMenu">
+                Sort by {{sortBy}} <mat-icon>expand_more</mat-icon>
+            </button>
+            <mat-menu #sortByMenu="matMenu" >
+                <button (click)="updateSortBy('asc')" class="pl-3">Ascending</button><br>
+                <button (click)="updateSortBy('desc')" class="pl-3">Descending</button>
+            </mat-menu>
+        </div>
+        <div class="flex items-center">
+            <div>
+                <button mat-button [matMenuTriggerFor]="menu">
+                    Show {{itemsCount}}
+                    <mat-icon>expand_more</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button (click)="updateItemsAmount(10)" class="pl-4">10</button><br>
+                    <button (click)="updateItemsAmount(20)" class="pl-4">20</button><br>
+                    <button (click)="updateItemsAmount(50)" class="pl-4">50</button><br>
+                    <button (click)="updateItemsAmount(100)" class="pl-4">100</button><br>
+                </mat-menu>
+            </div>
+            <!-- Show one item per column -->
+            <button (click)="columnLayoutUpdate(1)">
+                <mat-icon>view_list</mat-icon>
+            </button>
+            <!-- show 3 items per column -->
+            <button (click)="columnLayoutUpdate(3)">
+                <mat-icon>view_module</mat-icon>
+            </button>
+            <!-- show 4 items per column -->
+            <button (click)="columnLayoutUpdate(4)">
+                <mat-icon>view_comfy</mat-icon>
+            </button>
+        </div>
+    </div>
+</mat-card>

@@ -1,0 +1,26 @@
+<section>
+   <p class="font-thin pt-8 pl-8 text-[14pt]">Fill out to continue </p>
+  <div class="container ml-20 mt-6">
+    <mat-form-field class="w-64">
+    <mat-label>Address area delivery</mat-label>
+    <mat-select [formControl]="addressControl">
+        <mat-optgroup *ngFor="let group of addressGroups" [label]="group.name"
+                    [disabled]="group.disabled">
+        <mat-option (onSelectionChange)="updateContinueStatus(address.value)" *ngFor="let address of group.address" [value]="address.value">
+            {{address.viewValue}}
+        </mat-option>
+        </mat-optgroup>
+    </mat-select>
+    </mat-form-field>
+  
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Contact No.</mat-label>
+      <span matPrefix>+977 &nbsp;</span>
+      <input type="tel" maxlength="10"  minlength="10" required matInput placeholder="9xx-xxx-xxxx">
+    </mat-form-field> <br>
+    <button type="submit" [disabled]="disableContinue" mat-raised-button class="mt-4 text-center ml-48" color="primary">Continue</button>
+  </form> 
+  </div> 
+  
+</section>
