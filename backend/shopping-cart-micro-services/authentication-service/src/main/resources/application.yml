@@ -1,0 +1,42 @@
+server:
+  port: 8084
+
+jwt:
+  secret: esewa
+app:
+  jwttoken:
+    message: esewa-is-my-secret-key
+
+spring:
+  application:
+    name: AUTHENTICATION-SERVICE
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/userdb
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  eureka:
+    instance:
+      prefer-ip-address: true
+    client:
+      fetch-registry: true
+      register-with-eureka: true
+      service-url:
+        defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          github:
+#            clientId: 156aaa94354206aa50da
+#            clientSecret: abb261ac11ba291f98d84b59f953623bf428095c
+
+
+

@@ -1,0 +1,48 @@
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+
+      routes:
+        - id: PRODUCT-SERVICE
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/products/**
+
+        - id: PAYMENT-SERVICE
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/payment/**
+
+        - id: ORDER-SERVICE
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/order/**
+
+        - id: AUTHENTICATION-SERVICE
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/auth/**
+
+server:
+  port: 8080
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER_ADDRESS:http://localhost:8761/eureka}
+
